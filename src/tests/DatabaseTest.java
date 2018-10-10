@@ -37,5 +37,7 @@ public class DatabaseTest {
             ex.printStackTrace();
             return;
         }
+        
+        System.out.println("life is good!");
     }
 }
