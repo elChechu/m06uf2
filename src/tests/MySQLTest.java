@@ -15,7 +15,7 @@ public class MySQLTest {
     
     public static void loadDriver() throws ClassNotFoundException {
         
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
     }
     
     public static void checkServer() throws IOException {
