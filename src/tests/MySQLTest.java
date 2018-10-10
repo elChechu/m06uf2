@@ -2,6 +2,12 @@ package tests;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +26,17 @@ public class MySQLTest {
         s.close();
     }
     
+    public static Connection getAConnection(String user, String password) throws SQLException {
+        
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        Properties props = new Properties();
+        props.setProperty("user", user);
+        props.setProperty("password", password);
+        props.setProperty("useSSL", "false");
+        props.setProperty("serverTimezone", "UTC");
+        return DriverManager.getConnection(url, props);
+    }
+    
     public static void main(String[] args) {
         
         try {
@@ -34,6 +51,14 @@ public class MySQLTest {
             checkServer();
         } catch (IOException ex) {
             System.out.println("server is not running");
+            ex.printStackTrace();
+            return;
+        }
+        
+        try {
+            getAConnection("root", "yourpassword");
+        } catch (SQLException ex) {
+            System.out.println("connection failed");
             ex.printStackTrace();
             return;
         }
