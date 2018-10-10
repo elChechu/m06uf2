@@ -7,7 +7,7 @@ import java.net.Socket;
  *
  * @author julian
  */
-public class DatabaseTest {
+public class PostgreSQLTest {
     
     public static void loadDriver() throws ClassNotFoundException {
         
