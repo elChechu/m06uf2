@@ -32,6 +32,7 @@ public class MySQLTest {
         props.setProperty("password", password);
         props.setProperty("useSSL", "false");
         props.setProperty("serverTimezone", "UTC");
+        props.setProperty("allowPublicKeyRetrieval", "true");
         return DriverManager.getConnection(url, props);
     }
     
