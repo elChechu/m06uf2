@@ -16,7 +16,7 @@ import java.util.Properties;
 public class TasquesDAO {
     
     private static final String USER = "root";
-    private static final String PASSWORD = "seasonsend";
+    private static final String PASSWORD = "yourpassword";
     
     private Connection getConnection() throws SQLException {        
         
