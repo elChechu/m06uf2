@@ -15,18 +15,29 @@ public class ProvaTasques {
     
     public static void main(String[] args) throws SQLException {
         
+        // crear("estudiar java");
+        trobarTots();
+    }
+    
+    private static void trobarTots() throws SQLException {
+        
         TasquesDAO tdao = new TasquesDAO();
-        
-        Date dataInici = new GregorianCalendar(2018, Calendar.SEPTEMBER, 17).getTime();
-        Date dataFinal = new GregorianCalendar(2019, Calendar.MAY, 31).getTime();        
-        
-        int id = new Random().nextInt();
-        
-        tdao.crearTasca(new Tasca(id, "estudiar java", dataInici, dataFinal, false));
         
         List<Tasca> tasques = tdao.trobarTotesLesTasques();
         for (Tasca tasca: tasques) {
             System.out.println(tasca);
         }
+    }
+    
+    private static void crear(String descripcio) throws SQLException {
+        
+        TasquesDAO tdao = new TasquesDAO();
+        
+        Date dataInici = new GregorianCalendar(2018, Calendar.SEPTEMBER, 17).getTime();
+        Date dataFinal = new GregorianCalendar(2019, Calendar.MAY, 31).getTime();        
+        
+        int id = tdao.ultimId() + 1;
+        
+        tdao.crearTasca(new Tasca(id, descripcio, dataInici, dataFinal, false));
     }
 }
