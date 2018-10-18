@@ -30,6 +30,7 @@ public class TasquesDAO {
         return DriverManager.getConnection(url, props);
     }
     
+    
     public void crearTasca(Tasca tasca) throws SQLException {        
 
         // implementa-ho!
@@ -42,6 +43,12 @@ public class TasquesDAO {
     }
     
     public Tasca trobarTasca(int id) throws SQLException {
+        
+        // implementa-ho!
+        return null;
+    }
+    
+    public List<Tasca> trobarPerDescripcio(String descripcio) throws SQLException {
         
         // implementa-ho!
         return null;
