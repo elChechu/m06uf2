@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -15,8 +14,17 @@ public class ProvaTasques {
     
     public static void main(String[] args) throws SQLException {
         
-        // crear("estudiar java");
+        // crearITrobar();
         trobarTots();
+    }
+    
+    private static void crearITrobar() throws SQLException {
+        
+        TasquesDAO tdao = new TasquesDAO();
+        
+        int id = crear("una prova");
+        Tasca tasca = tdao.trobarTasca(id);
+        System.out.println(tasca);
     }
     
     private static void trobarTots() throws SQLException {
@@ -29,15 +37,15 @@ public class ProvaTasques {
         }
     }
     
-    private static void crear(String descripcio) throws SQLException {
+    private static int crear(String descripcio) throws SQLException {
         
         TasquesDAO tdao = new TasquesDAO();
         
         Date dataInici = new GregorianCalendar(2018, Calendar.SEPTEMBER, 17).getTime();
         Date dataFinal = new GregorianCalendar(2019, Calendar.MAY, 31).getTime();        
         
-        int id = tdao.ultimId() + 1;
-        
+        int id = tdao.ultimId() + 1;        
         tdao.crearTasca(new Tasca(id, descripcio, dataInici, dataFinal, false));
+        return id;
     }
 }

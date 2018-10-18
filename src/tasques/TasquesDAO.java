@@ -41,6 +41,12 @@ public class TasquesDAO {
         return 0;
     }
     
+    public Tasca trobarTasca(int id) throws SQLException {
+        
+        // implementa-ho!
+        return null;
+    }
+    
     public List<Tasca> trobarTotesLesTasques() throws SQLException {
         
         List<Tasca> tasques = new ArrayList();
