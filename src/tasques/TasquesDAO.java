@@ -56,19 +56,24 @@ public class TasquesDAO {
         Statement statement = conn.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM tasques");
         while (result.next()) {
-
-            Tasca tasca = new Tasca();
-            tasca.setId(result.getInt("id"));
-            tasca.setDescripcio(result.getString("descripcio"));
-            tasca.setDataInici(result.getDate("data_inici"));
-            tasca.setDataFinal(result.getDate("data_final"));
-            tasca.setFinalitzada(result.getBoolean("finalitzada"));
-
+            Tasca tasca = novaTascaDelResult(result);
             tasques.add(tasca);
         }
         
         conn.close();
         
         return tasques;
+    }
+    
+    private Tasca novaTascaDelResult(ResultSet result) throws SQLException {
+        
+        Tasca tasca = new Tasca();
+        tasca.setId(result.getInt("id"));
+        tasca.setDescripcio(result.getString("descripcio"));
+        tasca.setDataInici(result.getDate("data_inici"));
+        tasca.setDataFinal(result.getDate("data_final"));
+        tasca.setFinalitzada(result.getBoolean("finalitzada"));
+        
+        return tasca;        
     }
 }
