@@ -54,6 +54,20 @@ public class ExceptionTest {
         } catch (Exception ex) {
             System.out.println("ha fallat el ambFinally(true)");
         }
+        
+        System.out.println("=============ambCatchFinally(false)==============");
+        try {
+            ambCatchFinally(false);
+        } catch (Exception ex) {
+            System.out.println("ha fallat el ambCatchFinally(false)");
+        }
+        
+        System.out.println("=============ambCatchFinally(true)==============");
+        try {
+            ambCatchFinally(true);
+        } catch (Exception ex) {
+            System.out.println("ha fallat el ambCatchFinally(true)");
+        }
     }
     
     public static void senseTry(boolean error) throws Exception {
@@ -87,7 +101,24 @@ public class ExceptionTest {
             System.out.println("final");
             
         } finally {
+            System.out.println("final sempre");
+        }
+    }
+    
+    public static void ambCatchFinally(boolean error) throws Exception {
+        
+        try {
+            System.out.println("inici");
+            if (error) 
+                throw new Exception("error al mig!");
+            System.out.println("final");
+            
+        } catch (Exception e) {
+            System.out.println("catched: " + e.getMessage());
             System.out.println("final alternatiu");
+            
+        } finally {
+            System.out.println("final sempre");
         }
     }
 }
