@@ -46,20 +46,19 @@ public class TransactionTest {
 
     private static int insert(Connection conn, String valor) throws SQLException {
 
-        int key = 0;
-
         String sql = "INSERT INTO idvalor (valor) VALUES (?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, valor);
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    key = rs.getInt(1);
+                    return rs.getInt(1);
+                }
+                else {
+                    throw new SQLException("key is missing");
                 }
             }
         }
-
-        return key;
     }
 
     // PROVES
