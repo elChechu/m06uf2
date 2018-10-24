@@ -31,8 +31,10 @@ public class TransactionTest {
      */
     private static final String USER = "root";
     private static final String PASSWORD = "yourpassword";
+    
+    // CONNECTIONS
 
-    private static Connection getConnection() throws SQLException {
+    private static Connection getMySQLConnection() throws SQLException {
 
         String url = "jdbc:mysql://localhost:3306/testdb";
         Properties props = new Properties();
@@ -44,6 +46,18 @@ public class TransactionTest {
         return DriverManager.getConnection(url, props);
     }
 
+    private static Connection getPostgresConnection() throws SQLException {
+        
+        String url = "jdbc:postgresql://localhost/testdb";
+        Properties props = new Properties();
+        props.setProperty("user", USER);
+        props.setProperty("password", PASSWORD);
+        props.setProperty("ssl", "false");
+        return DriverManager.getConnection(url, props);
+    }
+    
+    // INSERT
+    
     private static int insert(Connection conn, String valor) throws SQLException {
 
         String sql = "INSERT INTO idvalor (valor) VALUES (?)";
@@ -61,10 +75,11 @@ public class TransactionTest {
         }
     }
 
-    // PROVES
+    // TESTS
+    
     public static void main(String[] args) throws SQLException {
 
-        try (Connection conn = getConnection()) {
+        try (Connection conn = getMySQLConnection()) {
         
             System.out.println("========== without(false) ==========");
             testWithout(conn, false);
