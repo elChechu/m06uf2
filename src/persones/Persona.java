@@ -11,6 +11,11 @@ public class Persona {
     private int edat;
     
     public Persona(String nom, int edat) {
+        this(null, nom, edat);
+    }
+    
+    public Persona(String id, String nom, int edat) {
+        this.id = id;
         this.nom = nom;
         this.edat = edat;
     }
