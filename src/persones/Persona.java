@@ -6,6 +6,7 @@ package persones;
  */
 public class Persona {
     
+    private String id;
     private String nom;
     private int edat;
     
@@ -30,8 +31,16 @@ public class Persona {
         this.edat = edat;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "Persona{" + "nom=" + nom + ", edat=" + edat + '}';
+        return "Persona{" + "id=" + id + ", nom=" + nom + ", edat=" + edat + '}';
     }
 }
