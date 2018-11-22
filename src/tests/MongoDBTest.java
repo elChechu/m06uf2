@@ -23,6 +23,10 @@ public class MongoDBTest {
         MongoCollection<Document> collection = database.getCollection("persones");
         
         Document doc = collection.find().first();
+        if (doc == null) {
+            System.out.println("no rows found");
+            return;
+        }
         
         for (Entry<String, Object> entry: doc.entrySet()) {
             System.out.println(
