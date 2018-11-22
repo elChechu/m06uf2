@@ -44,7 +44,7 @@ public class ProvaPersones {
         boolean end = false;
         switch (parts[0]) {
             case "?":
-                System.out.println("new NOM EDAT|list|exit");
+                System.out.println("new NOM EDAT|id ID|list|exit");
                 break;
             
             case "new":
