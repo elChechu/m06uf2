@@ -23,4 +23,13 @@ public class PersonesDAO {
         throw new RuntimeException("no implementat!");
     }
     
+    public boolean addMitja(String idStr, String mitja) {
+        
+        throw new RuntimeException("no implementat!");
+    }
+    
+    public boolean removeMitja(String idStr, String mitja) {
+        
+        throw new RuntimeException("no implementat!");
+    }
 }

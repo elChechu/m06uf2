@@ -1,5 +1,7 @@
 package persones;
 
+import java.util.List;
+
 /**
  *
  * @author julian
@@ -9,15 +11,17 @@ public class Persona {
     private String id;
     private String nom;
     private int edat;
+    private List<String> mitjans;
     
     public Persona(String nom, int edat) {
-        this(null, nom, edat);
+        this(null, nom, edat, null);
     }
     
-    public Persona(String id, String nom, int edat) {
+    public Persona(String id, String nom, int edat, List<String> mitjans) {
         this.id = id;
         this.nom = nom;
         this.edat = edat;
+        this.mitjans = mitjans;
     }
 
     public String getNom() {
@@ -44,8 +48,16 @@ public class Persona {
         this.id = id;
     }
 
+    public List<String> getMitjans() {
+        return mitjans;
+    }
+
+    public void setMitjans(List<String> mitjans) {
+        this.mitjans = mitjans;
+    }
+
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", nom=" + nom + ", edat=" + edat + '}';
+        return "Persona{" + "id=" + id + ", nom=" + nom + ", edat=" + edat + ", mitjans=" + mitjans + '}';
     }
 }

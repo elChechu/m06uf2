@@ -41,10 +41,12 @@ public class ProvaPersones {
 
     private static boolean processCommand(String[] parts, PersonesDAO dao) throws IOException {
         
+        String idStr;
+        
         boolean end = false;
         switch (parts[0]) {
             case "?":
-                System.out.println("new NOM EDAT|id ID|list|exit");
+                System.out.println("new NOM EDAT|id ID|list|add ID MITJA|remove ID MITJA|exit");
                 break;
             
             case "new":
@@ -61,12 +63,29 @@ public class ProvaPersones {
                 
             case "id":
                 assertParameterCount(parts, 2);
-                String idStr = getStrParameter(parts, 1);
+                idStr = getStrParameter(parts, 1);
                 
                 Persona foundp = dao.findPersona(idStr);
                 System.out.println("found " + foundp);
                 
                 break;                
+                
+            case "add":
+            case "remove":
+                assertParameterCount(parts, 3);
+                idStr = getStrParameter(parts, 1);
+                String mitja = getStrParameter(parts, 2);
+               
+                boolean result;
+                if ("add".equals(parts[0])) {
+                    result = dao.addMitja(idStr, mitja);
+                }
+                else {
+                    result = dao.removeMitja(idStr, mitja);
+                }
+                System.out.println("changed is " + result);
+                
+                break;
                 
             case "list":
                 assertParameterCount(parts, 1);

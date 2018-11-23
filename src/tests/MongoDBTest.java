@@ -38,7 +38,7 @@ public class MongoDBTest {
         ObjectId id = doc.getObjectId("_id");
         String idStr = id.toString();
         
-        Persona p = new Persona(idStr, nom, edat);
+        Persona p = new Persona(idStr, nom, edat, null);
         System.out.println(p);
     }
 }
