@@ -33,7 +33,7 @@ CREATE TABLE `musics` (
 public class BandesDAO {
     
     private static final String USER = "root";
-    private static final String PASSWORD = "yourpassword";
+    private static final String PASSWORD = "seasonsend";
     
     private Connection getConnection() throws SQLException {
         
@@ -69,6 +69,65 @@ public class BandesDAO {
         }
     }
     
+    public boolean deleteBanda(Integer bandaId) {
+        
+        String sql1 = "DELETE FROM musics WHERE banda_id = ?";
+        String sql2 = "DELETE FROM bandes WHERE banda_id = ?";
+        
+        try (Connection conn = getConnection()) {
+            
+            boolean deleted;
+            conn.setAutoCommit(false);
+            
+            try {
+                try (PreparedStatement ps = conn.prepareStatement(sql1)) {                
+                    ps.setInt(1, bandaId);
+                    ps.executeUpdate();
+                }
+                try (PreparedStatement ps = conn.prepareStatement(sql2)) {                
+                    ps.setInt(1, bandaId);
+                    deleted = ps.executeUpdate() == 1;
+                }
+
+                conn.commit();
+                return deleted;
+                
+            } catch (SQLException ex) {
+                conn.rollback();
+                throw ex;
+                
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        }  catch (SQLException e) {
+            throw new RuntimeException("esborrant banda", e);
+        }
+        
+    }
+    
+    public Banda findBanda(Integer bandaId) {
+        
+        String sql = "SELECT banda_id,nom FROM bandes WHERE banda_id = ?";
+        
+        try (Connection conn = getConnection()) { 
+            try (PreparedStatement ps = conn.prepareStatement(sql)) { 
+                ps.setInt(1, bandaId);                
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return new Banda(rs.getInt(1), rs.getString(2));
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("cercant banda", e);
+        }
+        
+    }
+    
     public List<Banda> findBandes() {
         
         List<Banda> list = new ArrayList<>();
@@ -89,28 +148,63 @@ public class BandesDAO {
         }
     }
     
-    public boolean deleteBanda(Integer bandaId) {
-        
-        throw new RuntimeException("no implementat!");        
-    }
-    
-    public Banda findBanda(Integer bandaId) {
-        
-        throw new RuntimeException("no implementat!");        
-    }
-    
     public List<Music> findMusics(Integer bandaId) {
         
-        throw new RuntimeException("no implementat!");
+        List<Music> list = new ArrayList<>();
+        
+        try (Connection conn = getConnection()) {            
+            try (PreparedStatement ps = conn.prepareStatement("SELECT music_id,nom,instrument FROM musics WHERE banda_id = ?")) {
+                ps.setInt(1, bandaId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Music music = new Music(rs.getInt(1), rs.getString(2), rs.getString(3));                        
+                        list.add(music);
+                    }
+                }
+            }            
+            return list;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("cercant musics", e);
+        }
     }
     
     public Integer createMusic(Music music, Banda banda) {
         
-        throw new RuntimeException("no implementat!");
+        Integer key = null;
+        String sql = "INSERT INTO musics (nom,instrument,banda_id) VALUES (?,?,?)";
+        
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {                
+                ps.setString(1, music.getNom());
+                ps.setString(2, music.getInstrument());
+                ps.setInt(3, banda.getId());
+                ps.executeUpdate();
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        key = rs.getInt(1);
+                    }
+                }
+            }
+            return key;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("creant music", e);
+        }
     }
     
     public boolean deleteMusic(Integer musicId) {
         
-        throw new RuntimeException("no implementat!");
+        String sql = "DELETE FROM musics WHERE music_id = ?";
+        
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, musicId);
+                return ps.executeUpdate() == 1;
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("esborrant music", e);
+        }
     }
 }
